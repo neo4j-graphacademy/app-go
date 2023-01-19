@@ -1,0 +1,32 @@
+= Building Neo4j Applications with Go
+
+> Learn how to interact with Neo4j from a Go project using the Neo4j Go Driver
+
+
+This repository accompanies the link:https://graphacademy.neo4j.com/courses/app-go/[Building Neo4j Applications with Go course^] on link:https://graphacademy.neo4j.com/[Neo4j GraphAcademy^].
+
+For a complete walkthrough of this repository,  link:https://graphacademy.neo4j.com/courses/app-go/[enrol now^].
+
+
+== Installing the Driver
+
+To use the Neo4j Go Driver in your Go project, you can run the following command:
+
+// tag::install[]
+.Installing the neo4j-go-driver dependency
+[source,sh]
+----
+go get -u github.com/neo4j/neo4j-go-driver/v5
+----
+// end::install[]
+
+
+== Running Examples
+
+All examples that accompany the course are in the `src/` folder.
+You can run these examples by invoking the `go run` subcommand.
+
+[source,sh]
+----
+go run ./src/example/example.go
+----
