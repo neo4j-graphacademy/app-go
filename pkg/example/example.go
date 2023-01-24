@@ -75,3 +75,86 @@ func main() {
 	PanicOnErr(err)
 	fmt.Println(director)
 }
+
+/*
+
+// tag::executeread[]
+personNode, err := neo4j.ExecuteRead[neo4j.Node](
+	ctx,  // <1>
+	session, // <2>
+	func(tx neo4j.ManagedTransaction) (neo4j.Node, error) { // <3>
+		result, err := tx.Run(ctx, cypher, params)
+		if err != nil {
+			return *new(neo4j.Node), err
+		}
+		// same as before: extract the single result
+		// and return it as a neo4j.Node
+		return neo4j.SingleTWithContext(ctx, result,  // <4>
+			func(record *neo4j.Record) (neo4j.Node, error) {
+				node, _, err := neo4j.GetRecordValue[neo4j.Node](record, "p")
+				return node, err
+			}
+		)
+	}
+)
+// end::executeread[]
+
+// tag::executewrite[]
+personNode, err := neo4j.ExecuteRead[neo4j.Node](
+	ctx,  // <1>
+	session, // <2>
+	func(tx neo4j.ManagedTransaction) (neo4j.Node, error) { // <3>
+		result, err := tx.Run(ctx, cypher, params)
+		if err != nil {
+			return *new(neo4j.Node), err
+		}
+		// same as before: extract the single result
+		// and return it as a neo4j.Node
+		return neo4j.SingleTWithContext(ctx, result,  // <4>
+			func(record *neo4j.Record) (neo4j.Node, error) {
+				node, _, err := neo4j.GetRecordValue[neo4j.Node](record, "p")
+				return node, err
+			}
+		)
+	}
+)
+// end::executewrite[]
+
+# Shortform examples:
+
+// tag::Single[]
+// Get the first and only result from the stream.
+first, err := record.Single()
+// end::Single[]
+
+// tag::Next[]
+// .Next() returns false upon error
+for result.Next() {
+    record := result.Record()
+    handleRecord(record)
+}
+// Err returns the error that caused Next to return false
+if err = result.Err(); err != nil {
+    handleError(err)
+}
+// end::Next[]
+
+// tag::NextRecord[]
+for result.NextRecord(&record) {
+    fmf.Println(record.Keys)
+}
+// end::NextRecord[]
+
+// tag::Consume[]
+summary := result.Consume()
+// Time in milliseconds before receiving the first result
+fmt.Println(summary.ResultAvailableAfter())
+// Time in milliseconds once the final result was consumed
+fmt.Println(summary.ResultConsumedAfter())
+// end::Consume[]
+
+// tag::Collect[]
+remaining, remainingErr := result.Collect()
+// end::Collect[]
+
+*/

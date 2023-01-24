@@ -4,6 +4,7 @@ package main
 import (
 	"context"
 	"fmt"
+
 	. "github.com/neo4j-graphacademy/neoflix/pkg/shared"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 )
@@ -27,11 +28,14 @@ func main() {
 	// tag::solution[]
 	// Execute the `cypher` statement in a write transaction
 	cypher := `
-		MATCH (m:Movie {title: "Matrix, The"})
+		MATCH (m:Movie {title: $title})
 		CREATE (p:Person {name: $name})
 		CREATE (p)-[:ACTED_IN]->(m)
 		RETURN p`
-	params := map[string]any{"name": "Your Name"}
+	params := map[string]any{
+		"title": "Matrix, The",
+		"name":  "Your Name",
+	}
 
 	// execute a transaction function with neo4j.ExecuteWrite[T]
 	// and properly get the result as a neo4j.Node
