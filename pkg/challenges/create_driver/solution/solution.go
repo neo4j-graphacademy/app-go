@@ -5,6 +5,7 @@ package main
 import (
 	"context"
 	"fmt"
+
 	. "github.com/neo4j-graphacademy/neoflix/pkg/shared"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 )
@@ -16,6 +17,14 @@ func main() {
 	// Neo4j Credentials
 	credentials := GetNeo4jCredentials()
 	// end::credentials[]
+
+	// Cypher Query and Parameters
+	cypher := `
+      MATCH (p:Person)-[:DIRECTED]->(:Movie {title: $title})
+      RETURN p.name AS Director
+    `
+	params := map[string]any{"title": "Toy Story"}
+
 	// tag::solution[]
 	// Create a Driver Instance
 	ctx := context.Background()
@@ -31,10 +40,7 @@ func main() {
 	defer PanicOnClosureError(ctx, session)
 
 	// Run a Cypher statement
-	result, err := session.Run(ctx, `
-		MATCH (p:Person)-[:DIRECTED]->(:Movie {title: $title})
-		RETURN p.name AS Director
-`, map[string]any{"title": "Toy Story"})
+	result, err := session.Run(ctx, cypher, params)
 	PanicOnErr(err)
 
 	// Log the Director value of the first record

@@ -23,10 +23,10 @@ go get -u github.com/neo4j/neo4j-go-driver/v5
 
 == Running Examples
 
-All examples that accompany the course are in the `src/` folder.
+All examples that accompany the course are in the `pkg/` folder.
 You can run these examples by invoking the `go run` subcommand.
 
 [source,sh]
 ----
-go run ./src/example/example.go
+go run ./pkg/example/example.go
 ----

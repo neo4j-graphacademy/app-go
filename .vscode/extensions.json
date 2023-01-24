@@ -1,0 +1,6 @@
+{
+	"recommendations": [
+		"adamcowley.neo4j-vscode",
+		"golang.go"
+	]
+}

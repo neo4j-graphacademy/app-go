@@ -5,9 +5,10 @@ package main
 import (
 	"context"
 	"fmt"
+	"time"
+
 	. "github.com/neo4j-graphacademy/neoflix/pkg/shared"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
-	"time"
 )
 
 // end::import[]
@@ -37,13 +38,15 @@ func main() {
 
 	// tag::oneoff[]
 	// Execute a Cypher statement in an auto-commit transaction
-	result, err := session.Run(ctx, `
+	result, err := session.Run(
+		ctx, // <1>
+		`
 		MATCH (p:Person)-[:DIRECTED]->(:Movie {title: $title})
 		RETURN p
-`, // <1>
-		map[string]any{"title": "The Matrix"}, // <2>
+		`, // <2>
+		map[string]any{"title": "The Matrix"}, // <3>
 		func(txConfig *neo4j.TransactionConfig) {
-			txConfig.Timeout = 3 * time.Second // <3>
+			txConfig.Timeout = 3 * time.Second // <4>
 		},
 	)
 	PanicOnErr(err)
