@@ -87,7 +87,7 @@ personNode, err := neo4j.ExecuteRead[neo4j.Node](
 		if err != nil {
 			return *new(neo4j.Node), err
 		}
-		// same as before: extract the single result
+		// extract the single result
 		// and return it as a neo4j.Node
 		return neo4j.SingleTWithContext(ctx, result,  // <4>
 			func(record *neo4j.Record) (neo4j.Node, error) {
@@ -108,7 +108,7 @@ personNode, err := neo4j.ExecuteRead[neo4j.Node](
 		if err != nil {
 			return *new(neo4j.Node), err
 		}
-		// same as before: extract the single result
+		// extract the single result
 		// and return it as a neo4j.Node
 		return neo4j.SingleTWithContext(ctx, result,  // <4>
 			func(record *neo4j.Record) (neo4j.Node, error) {
@@ -156,5 +156,21 @@ fmt.Println(summary.ResultConsumedAfter())
 // tag::Collect[]
 remaining, remainingErr := result.Collect()
 // end::Collect[]
+
+// tag::keys[]
+fmt.Println(record.Keys) // ['p', 'r', 'm']
+// end::keys[]
+
+// tag::index[]
+// Access a value by its index
+fmt.Println(record.Values[0].(neo4j.Node)) // The Person node
+// end::index[]
+
+// tag::alias[]
+// Access a value by its alias
+movie, _ := record.Get("movie")
+movieNode := movie.(neo4j.Node)
+fmt.Println(movieNode) // The Movie node
+// end::alias[]
 
 */
