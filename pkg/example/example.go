@@ -23,9 +23,9 @@ func main() {
 	)
 	// end::driver[]
 	PanicOnErr(err)
-	// tag::close[]
+	// tag::defer-close[]
 	defer PanicOnClosureError(ctx, driver)
-	// end::close[]
+	// end::defer-close[]
 
 	// tag::verify[]
 	// Verify Connectivity
@@ -39,6 +39,12 @@ func main() {
 	// tag::defer-close[]
 	defer PanicOnClosureError(ctx, session)
 	// end::defer-close[]
+
+	// tag::run[]
+
+	// Execute Cypher statements within the session...
+
+	// end::run[]
 
 	// tag::oneoff[]
 	// Execute a Cypher statement in an auto-commit transaction
@@ -78,6 +84,16 @@ func main() {
 		})
 	PanicOnErr(err)
 	fmt.Println(director)
+
+	// tag::session-close[]
+	// Close the session once you have run all of your Cypher statements
+	session.Close(ctx)
+	// end::session-close[]
+
+	// tag::driver-close[]
+	// Close the driver to release any resources
+	driver.Close(ctx)
+	// end::driver-close[]
 }
 
 /*
