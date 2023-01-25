@@ -32,9 +32,13 @@ func main() {
 	PanicOnErr(driver.VerifyConnectivity(ctx))
 	// end::verify[]
 
+	// tag::session[]
 	// Open a new Session
 	session := driver.NewSession(ctx, neo4j.SessionConfig{})
+	// end::session[]
+	// tag::defer-close[]
 	defer PanicOnClosureError(ctx, session)
+	// end::defer-close[]
 
 	// tag::oneoff[]
 	// Execute a Cypher statement in an auto-commit transaction
