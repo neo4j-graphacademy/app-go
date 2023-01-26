@@ -120,7 +120,7 @@ personNode, err := neo4j.ExecuteRead[neo4j.Node](
 // end::executeread[]
 
 // tag::executewrite[]
-personNode, err := neo4j.ExecuteRead[neo4j.Node](
+personNode, err := neo4j.ExecuteWrite[neo4j.Node](
 	ctx,  // <1>
 	session, // <2>
 	func(tx neo4j.ManagedTransaction) (neo4j.Node, error) { // <3>
